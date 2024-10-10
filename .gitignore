@@ -1,0 +1,7 @@
+*.pyc
+__p*
+~*
+*.exe
+*.out
+.*
+*main.py
