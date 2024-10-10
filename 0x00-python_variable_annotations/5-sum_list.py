@@ -6,7 +6,7 @@
 from typing import List
 
 
-def sum_list(input_list: List[int]) -> float:
+def sum_list(input_list: List[float]) -> float:
     """Complex types - list of floats
         Arg:
           input_list: floats
