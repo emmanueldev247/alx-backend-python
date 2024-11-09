@@ -15,6 +15,7 @@ from typing import (
 from utils import (
     access_nested_map,
     get_json,
+    memoize,
 )
 
 
@@ -63,6 +64,34 @@ class TestGetJson(unittest.TestCase):
         result = get_json(test_url)
 
         self.assertEqual(result, test_payload)
+
+
+class TestMemoize(unittest.TestCase):
+    """test class for memoize function"""
+
+    class TestClass:
+        def a_method(self):
+            """A sample method returning a fixed value"""
+            return 42
+
+        @memoize
+        def a_property(self):
+            """A memoized property that calls a_method"""
+            return self.a_method()
+
+    def test_memoize(self):
+        """Test that memoize caches the result after the first call"""
+        test_instance = self.TestClass()
+
+        with patch.object(test_instance, 'a_method',
+                          return_value=42) as mock_method:
+            result1 = test_instance.a_property
+            result2 = test_instance.a_property
+
+            self.assertEqual(result1, 42)
+            self.assertEqual(result2, 42)
+
+            mock_method.assert_called_once()
 
 
 if __name__ == "__main__":
